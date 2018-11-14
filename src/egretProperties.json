@@ -5,8 +5,7 @@
   "target": {
     "current": "web"
   },
-  "modules": [
-    {
+  "modules": [{
       "name": "egret"
     },
     {
@@ -17,6 +16,10 @@
     },
     {
       "name": "tween"
+    },
+    {
+      "name": "entitas",
+      "path": "./libs/entitas"
     },
     {
       "name": "dragonBones"
