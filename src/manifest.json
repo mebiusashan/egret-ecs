@@ -5,15 +5,20 @@
 		"libs/modules/eui/eui.js",
 		"libs/modules/assetsmanager/assetsmanager.js",
 		"libs/modules/tween/tween.js",
+		"libs/entitas/entitas.js",
 		"libs/modules/dragonBones/dragonBones.js",
 		"libs/modules/game/game.js",
 		"libs/modules/promise/promise.js"
 	],
 	"game": [
-		"bin-debug/AssetAdapter.js",
+		"bin-debug/ecs/ECSApp.js",
+		"bin-debug/ecs/platform/Platform.js",
 		"bin-debug/LoadingUI.js",
 		"bin-debug/Main.js",
-		"bin-debug/Platform.js",
-		"bin-debug/ThemeAdapter.js"
+		"bin-debug/ecs/core/EntitasContext.js",
+		"bin-debug/ecs/platform/WebPlatform.js",
+		"bin-debug/ecs/platform/WXPlatform.js",
+		"bin-debug/ecs/ui/adapter/AssetAdapter.js",
+		"bin-debug/ecs/ui/adapter/ThemeAdapter.js"
 	]
 }
