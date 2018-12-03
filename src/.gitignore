@@ -1,0 +1,7 @@
+bin-debug/
+bin-release/
+manifest.json
+.wing/
+.vscode/
+.idea/
+libs/modules
