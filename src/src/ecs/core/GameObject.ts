@@ -6,7 +6,7 @@
 
 class GameObject extends GameEntity {
 
-    static readonly ZeroPosition = new egret.Point(0, 0);
+    //static readonly ZeroPosition = new egret.Point(0, 0);
 
     public static create(ecsctx: EntitasContext, name: string): GameObject {
         if (!ecsctx) {

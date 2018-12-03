@@ -21,8 +21,6 @@ class ECSApp extends egret.DisplayObjectContainer {
     }
 
     protected initialize(): void {
-
-    }
-
-    
+        
+    }   
 }

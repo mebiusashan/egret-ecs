@@ -7,7 +7,7 @@
 /**
  * 向量
  */
-class Vector {
+class Vector2 {
     public x: number;
     public y: number;
 
@@ -48,7 +48,7 @@ class Vector {
     /**
      * 复制另外一个向量的值
      */
-    public copy(v: Vector): void {
+    public copy(v: Vector2): void {
         this.x = v.x;
         this.y = v.y;
     }
@@ -64,71 +64,71 @@ class Vector {
     /**
      * 新建一个向量，Vector(1, 1)
      */
-    public static one(): Vector {
-        return new Vector(1, 1);
+    public static one(): Vector2 {
+        return new Vector2(1, 1);
     }
 
     /**
      * 新建一个向量，Vector(0, 0)
      */
-    public static zero(): Vector {
-        return new Vector(0, 0);
+    public static zero(): Vector2 {
+        return new Vector2(0, 0);
     }
 
     /**
      * 新建一个向量，Vector(-1, 0)
      */
-    public static left(): Vector {
-        return new Vector(-1, 0);
+    public static left(): Vector2 {
+        return new Vector2(-1, 0);
     }
 
     /**
      * 新建一个向量，Vector(1, 0)
      */
-    public static right(): Vector {
-        return new Vector(1, 0);
+    public static right(): Vector2 {
+        return new Vector2(1, 0);
     }
 
     /**
      * 新建一个向量，Vector(0, 1)
      */
-    public static down(): Vector {
-        return new Vector(0, 1);
+    public static down(): Vector2 {
+        return new Vector2(0, 1);
     }
 
     /**
      * 新建一个向量，Vector(0, -1)
      */
-    public static up(): Vector {
-        return new Vector(0, -1);
+    public static up(): Vector2 {
+        return new Vector2(0, -1);
     }
 
     /**
      * 向量加
      */
-    public static add(v1: Vector, v2: Vector): Vector {
-        return new Vector(v1.x + v2.x, v1.y + v2.y);
+    public static add(v1: Vector2, v2: Vector2): Vector2 {
+        return new Vector2(v1.x + v2.x, v1.y + v2.y);
     }
 
     /**
      * 向量减
      */
-    public static subtract(v1: Vector, v2: Vector): Vector {
-        return new Vector(v1.x - v2.x, v1.y - v2.y);
+    public static subtract(v1: Vector2, v2: Vector2): Vector2 {
+        return new Vector2(v1.x - v2.x, v1.y - v2.y);
     }
 
     /**
      * 向量点乘
      */
-    public static dotProduct(v1: Vector, v2: Vector): number {
+    public static dotProduct(v1: Vector2, v2: Vector2): number {
         return v1.x * v2.x + v1.y * v2.y;
     }
 
     /**
      * 求两个向量的夹角度数，返回角度值
      */
-    public static angle(v1: Vector, v2: Vector): number {
-        let a: number = Vector.dotProduct(v1, v2);
+    public static angle(v1: Vector2, v2: Vector2): number {
+        let a: number = Vector2.dotProduct(v1, v2);
         let b: number = v1.norm * v2.norm;
         let c: number = a / b;
         let rad: number = Math.acos(c);
@@ -137,8 +137,8 @@ class Vector {
     }
 
     //投影
-    public static projection(v1: Vector, v2: Vector): number {
-        let a: number = Vector.dotProduct(v1, v2);
+    public static projection(v1: Vector2, v2: Vector2): number {
+        let a: number = Vector2.dotProduct(v1, v2);
         return a / v2.norm;
     }
 
