@@ -61,4 +61,15 @@ class GameScene<T extends GameContext> extends egret.DisplayObjectContainer {
         this.setChildIndex(layer, layerOrder);
         return layer;
     }
+
+    protected addToLayer(target: egret.DisplayObjectContainer, displayObject: egret.DisplayObject, childIndex?: number): void {
+        if (target) {
+            if (displayObject.parent !== target) {
+                target.addChild(displayObject);
+            }
+            if (childIndex !== undefined) {
+                target.setChildIndex(displayObject, childIndex);
+            }
+        }
+    }
 }

@@ -21,8 +21,10 @@ class TestScene extends GameScene<MyGameContext> {
     public layer1: egret.DisplayObjectContainer | null = null;
     private testSceneSystem: TestSceneSystem | null = null;
 
-    protected enterScene() {
+    protected enterScene(): void {
+       //这次layers
        this.registerAllLayers();
+       //设置场景内容
        this.createScene();
     }
 
@@ -47,9 +49,13 @@ class TestScene extends GameScene<MyGameContext> {
         testSceneSystem.setPool(this.ecscontext.pool);
         testSceneSystem.initialize();
         //
-        const gameObject = GameObject.create(this.ecscontext, 'gameobj');
-        gameObject.addAs(BitmapComponent);
+        const testObject = GameObject.create(this.ecscontext, 'testObject');
+        testObject.addAs(BitmapComponent);
     }
+
+    public addToLayer0(displayObject: egret.DisplayObject, childIndex?: number): void {
+        this.addToLayer(this.layer0, displayObject, childIndex);
+    }   
 }
 
 class TestExecuteSystem extends GameSystem<MyGameContext> implements entitas.IExecuteSystem, entitas.ISetPool {
@@ -65,16 +71,20 @@ class TestExecuteSystem extends GameSystem<MyGameContext> implements entitas.IEx
         }
         let e: GameObject = null;
         let bitmapCom: BitmapComponent = null;
-        let gamecontext: MyGameContext = this.gamecontext;
-        let scene = gamecontext.gameScene as TestScene;
+        const gamecontext: MyGameContext = this.gamecontext;
+        const scene = gamecontext.gameScene as TestScene;
+        const posx = gamecontext.stage.stageWidth/2;
+        const posy = gamecontext.stage.stageHeight/2;
         for (let i = 0, length = ens.length; i < length; ++i) {
             e = ens[i] as GameObject;
             bitmapCom = e.getAs(BitmapComponent);
             if (!bitmapCom.parent) {
-                scene.addChild(bitmapCom);
+                scene.addToLayer0(bitmapCom, 10000);
                 bitmapCom.texture = RES.getRes('egret_icon_png');
-                bitmapCom.x = 640/2;
-                bitmapCom.y = 1136/2;
+                bitmapCom.anchorOffsetX = bitmapCom.width/2;
+                bitmapCom.anchorOffsetY = bitmapCom.height/2;
+                bitmapCom.x = posx;
+                bitmapCom.y = posy;
             }
         }
     }
@@ -92,17 +102,39 @@ class TestSceneSystem extends GameSystems<MyGameContext> {
 class Main extends ECSApp<MyGameContext> {
 
     protected start(): void {
+        this._start().catch(e => {
+            egret.log(e);
+        });
+    } 
+
+    private initGame(): void {
         //初始化ECS环境        
         this.createECSContext(ComponentsClassesRegister, 200);
         //初始化游戏上下文
-        this.__gamecontext__ = new MyGameContext;
-        this.__gamecontext__.clear();
-        this.__gamecontext__.setRoot(this);
+        const gamecontext = new MyGameContext;
+        this.__gamecontext__ = gamecontext;
+        gamecontext.clear();
+        gamecontext.setRoot(this);
         //
-        this.gotoNextScene();
-    } 
+        gamecontext.changeScene(new TestScene(this.__ecscontext__, gamecontext, 'TestScene'));
+    }
 
-    private gotoNextScene() {
-        this.__gamecontext__.changeScene(new TestScene(this.__ecscontext__, this.__gamecontext__, 'TestScene'));
+    private async _start() {
+        await this.loadResource();
+        this.initGame();
+    }
+
+    private async loadResource() {
+        try {
+            const loadingView = new LoadingUI();
+            const stage = this.stage;
+            stage.addChild(loadingView);
+            await RES.loadConfig("resource/default.res.json", "resource/");
+            await RES.loadGroup("preload", 0, loadingView);
+            stage.removeChild(loadingView);
+        }
+        catch (e) {
+            egret.error(e);
+        }
     }
 }

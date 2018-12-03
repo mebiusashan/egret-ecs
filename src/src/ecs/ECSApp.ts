@@ -18,11 +18,26 @@ class ECSApp<T extends GameContext> extends egret.DisplayObjectContainer {
     }
 
     private onAddToStage(event: egret.Event): void {
+
+        egret.lifecycle.addLifecycleListener((context) => {
+            // custom lifecycle plugin
+            context.onUpdate = () => {
+            }
+        });
+
+        egret.lifecycle.onPause = () => {
+            egret.ticker.pause();
+        }
+
+        egret.lifecycle.onResume = () => {
+            egret.ticker.resume();
+        }
+        //
         this.start();
     }
 
     protected start(): void {
-        //在这里写实现
+        //在这里写实现!
     }   
 
     protected createECSContext(register: Array<entitas.IComponent> | null, maxEntitiesNum: number): EntitasContext {
