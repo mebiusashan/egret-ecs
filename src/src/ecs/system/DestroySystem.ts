@@ -27,7 +27,30 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-const ComponentsClassesRegister: Array<entitas.IComponent> = [
-    DestroyComponent,
-    BitmapComponent,
-];
+class DestroySystem extends GameSystem<GameContext> implements entitas.IExecuteSystem, entitas.ISetPool {
+    private group1: entitas.Group | null = null;
+    public setPool(pool: entitas.Pool): void {
+        const ids = this.ecscontext.ids;
+        this.group1 = pool.getGroup(entitas.Matcher.allOf(ids.DestroyComponent));
+    }
+    public execute(): void {
+        const ens = this.group1.getEntities();
+        if (ens.length === 0) {
+            return;
+        }
+        //const gamecontext = this.gamecontext;
+        let e: GameObject = null;
+        //const onGameObjectDestroy: IGameObjectDestroy<GameObjectDestroy> = gamecontext.onGameObjectDestroy;
+        for (let i = 0, length = ens.length; i < length; ++i) {
+            e = ens[i] as GameObject;
+            GameObject.destroy(e);
+            //onGameObjectDestroy.dispatch(e);
+            //egret.log('GameObject.destroy => ' + e.name);
+        }
+    }
+}
+
+
+
+
+

@@ -7,10 +7,10 @@
 /**
  * 多游戏系统
  */
-class GameSystems extends entitas.Systems {
+class GameSystems<T extends GameContext > extends entitas.Systems {
     protected ecscontext: EntitasContext | null = null;
-    protected gamecontext: GameContext | null = null;
-    constructor(ecscontext: EntitasContext, gameContext: GameContext) {
+    protected gamecontext: T | null = null;
+    constructor(ecscontext: EntitasContext, gameContext: T) {
         super();
         this.ecscontext = ecscontext;
         this.gamecontext = gameContext;

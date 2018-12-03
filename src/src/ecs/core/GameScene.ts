@@ -8,12 +8,14 @@
 /**
  * 游戏场景
  */
-class GameScene extends egret.DisplayObjectContainer {
+class GameScene<T extends GameContext> extends egret.DisplayObjectContainer {
 
-    protected gamecontext: GameContext | null = null;
+    protected ecscontext: EntitasContext | null = null;
+    protected gamecontext: T | null = null;
 
-    constructor(gamecontext: GameContext, name?: string) {
+    constructor(ecscontext: EntitasContext, gamecontext: T, name?: string) {
         super();
+        this.ecscontext = ecscontext;
         this.gamecontext = gamecontext;
         this.name = name;
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);

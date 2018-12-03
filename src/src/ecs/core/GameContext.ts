@@ -14,7 +14,7 @@ class GameContext {
     public dtSec: number = 0;
     public main: egret.DisplayObjectContainer | null = null;
     public stage: egret.Stage | null = null;
-    public gameScene: GameScene | null = null;
+    public gameScene: egret.DisplayObjectContainer | null = null;
 
     public setRoot(main: egret.DisplayObjectContainer): GameContext {
         this.main = main;
@@ -26,7 +26,7 @@ class GameContext {
         return this;
     }
 
-    public changeScene(target: GameScene): boolean {
+    public changeScene(target: egret.DisplayObjectContainer): boolean {
         if (!target || !this.main) {
             return false;
         }

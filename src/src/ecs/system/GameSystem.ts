@@ -7,10 +7,10 @@
 /**
  * 单一游戏系统
  */
-class GameSystem {
+class GameSystem<T extends GameContext > {
     protected ecscontext: EntitasContext | null = null;
-    protected gamecontext: GameContext | null = null;
-    constructor(ecscontext: EntitasContext, gameContext: GameContext) {
+    protected gamecontext: T | null = null;
+    constructor(ecscontext: EntitasContext, gameContext: T) {
         this.ecscontext = ecscontext;
         this.gamecontext = gameContext;
     }

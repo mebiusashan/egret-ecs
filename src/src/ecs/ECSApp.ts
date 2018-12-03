@@ -22,7 +22,7 @@ class ECSApp<T extends GameContext> extends egret.DisplayObjectContainer {
     }
 
     protected start(): void {
-        //在这里写实现。。。。。。
+        //在这里写实现
     }   
 
     protected createECSContext(register: Array<entitas.IComponent> | null, maxEntitiesNum: number): EntitasContext {
