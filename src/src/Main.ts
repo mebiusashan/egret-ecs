@@ -58,12 +58,17 @@ class TestScene extends GameScene<MyGameContext> {
     }   
 }
 
-class TestExecuteSystem extends GameSystem<MyGameContext> implements entitas.IExecuteSystem, entitas.ISetPool {
+class TestExecuteSystem extends GameSystem<MyGameContext> implements entitas.IInitializeSystem, entitas.IExecuteSystem, entitas.ISetPool {
     private group1: entitas.Group | null = null;
     public setPool(pool: entitas.Pool): void {
         const ids = this.ecscontext.ids; 
         this.group1 = pool.getGroup(entitas.Matcher.allOf(ids.BitmapComponent));
     }
+
+    public initialize(): any {
+
+    }
+
     public execute(): void {
         const ens = this.group1.getEntities();
         if (ens.length === 0) {
