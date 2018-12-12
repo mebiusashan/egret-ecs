@@ -12,7 +12,7 @@ class Main extends Application<MyGameContext> {
         });
     } 
 
-    private initGame(): void {
+    private startGame(): void {
         //初始化ECS环境        
         this.createECSContext(ComponentsClassesRegister.concat(MyComponentsClassesRegister), 200);
         //初始化游戏上下文
@@ -26,7 +26,7 @@ class Main extends Application<MyGameContext> {
 
     private async _start() {
         await this.loadResource();
-        this.initGame();
+        this.startGame();
     }
 
     private async loadResource() {
