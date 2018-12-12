@@ -7,7 +7,7 @@
 /**
  * 框架入口
  */
-class ECSApp<T extends GameContext> extends egret.DisplayObjectContainer {
+class Application<T extends GameContext> extends egret.DisplayObjectContainer {
 
     protected __ecscontext__: EntitasContext | null = null;
     protected __gamecontext__: T | null = null;

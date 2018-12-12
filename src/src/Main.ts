@@ -104,7 +104,7 @@ class TestSceneSystem extends GameSystems<MyGameContext> {
     }
 }
 
-class Main extends ECSApp<MyGameContext> {
+class Main extends Application<MyGameContext> {
 
     protected start(): void {
         this._start().catch(e => {
