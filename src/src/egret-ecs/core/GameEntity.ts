@@ -5,7 +5,7 @@
 //////////////////////////
 
 
-interface IRestore {
+interface IData {
     restore: () => void;
 }
 
