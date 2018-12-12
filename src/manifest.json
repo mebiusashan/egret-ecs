@@ -49,6 +49,6 @@
 		"bin-debug/mygame/MyGameFactory.js",
 		"bin-debug/mygame/components/MyComponentsClassesRegister.js",
 		"bin-debug/mygame/scenes/TestScene.js",
-		"bin-debug/mygame/systems/TestSceneSystem.js"
+		"bin-debug/mygame/systems/TestSystem.js"
 	]
 }

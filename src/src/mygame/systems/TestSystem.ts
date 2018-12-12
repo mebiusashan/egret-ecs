@@ -43,7 +43,7 @@ class TestExecuteSystem extends GameSystem<MyGameContext> implements entitas.IIn
     }
 }
 
-class TestSceneSystem extends GameSystems<MyGameContext> {
+class TestSystem extends GameSystems<MyGameContext> {
     public setPool(pool: entitas.Pool): void {
         const ecscontext = this.ecscontext;
         const gamecontext = this.gamecontext;
