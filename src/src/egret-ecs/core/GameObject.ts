@@ -30,7 +30,7 @@ class GameObject extends GameEntity {
         super(componentsEnum, totalComponents, ecsctx);
     }
 
-    public setDestroy(): GameObject {
+    public addDestroyComponent(): GameObject {
         if (!this.hasAs(DestroyComponent)) {
             this.addAs(DestroyComponent);
         }
