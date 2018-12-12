@@ -27,6 +27,6 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-const ComponentsClassesRegister: Array<entitas.IComponent> = [
-    DestroyComponent,
+const MyComponentsClassesRegister: Array<entitas.IComponent> = [
+    BitmapComponent,
 ];
