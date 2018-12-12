@@ -18,10 +18,10 @@ class TestScene extends GameScene<MyGameContext> {
     private testSystem: TestSystem | null = null;
 
     protected enterScene(): void {
-       //这次layers
-       this.registerAllLayers();
-       //设置场景内容
-       this.createScene();
+        //这次layers
+        this.registerAllLayers();
+        //设置场景内容
+        this.createScene();
     }
 
     private registerAllLayers(): void {
@@ -48,10 +48,23 @@ class TestScene extends GameScene<MyGameContext> {
         MyGameObjectFactory.getInstance().setBuilder(new MyGameObjectBuilder(this.ecscontext));
         const testObject = MyGameObjectFactory.getInstance().createTestGameObject();
         //testObject.builder.addDestroy();
+
+        this.testTileMap();
+    }
+
+    private testTileMap(): void {
+        const tlm = new TiledMap('testmap');
+        const layer = new TiledMapLayer('testlayer', tlm, 3, 4, 100, 100);
+        const layer1 = tlm.addTiledMapLayer(layer);
+        for (let i = 0; i < 4; ++i) {
+            for (let j = 0; j < 3; ++j) {
+                layer1.addGrid(j, i);
+            }
+        }
     }
 
     public addToLayer0(displayObject: egret.DisplayObject, childIndex?: number): void {
         this.addToLayer(this.layer0, displayObject, childIndex);
-    }   
+    }
 }
 
