@@ -6,7 +6,7 @@
 
 class GameObject extends GameEntity {
 
-    //static readonly ZeroPosition = new egret.Point(0, 0);
+    private _builder: GameObjectBuilder | null = null;
 
     public static create(ecsctx: EntitasContext, name: string): GameObject {
         if (!ecsctx) {
@@ -22,6 +22,7 @@ class GameObject extends GameEntity {
 
     public static destroy(gameObject: GameObject): void {
         if (gameObject && gameObject._isEnabled) {
+            gameObject.clear();
             gameObject.ecscontext.pool.destroyEntity(gameObject);
         }
     }
@@ -30,11 +31,20 @@ class GameObject extends GameEntity {
         super(componentsEnum, totalComponents, ecsctx);
     }
 
-    public addDestroyComponent(): GameObject {
-        if (!this.hasAs(DestroyComponent)) {
-            this.addAs(DestroyComponent);
-        }
-        return this;
+    private clear(): void {
+        this._builder = null;
     }
 
+    public set builder(value: GameObjectBuilder) {
+        this._builder = value;
+    }
+
+    public get builder(): GameObjectBuilder {
+        if (!this._builder) {
+            egret.warn('this._builder is null, new GameObjectBuilder is not good');
+            this._builder = new GameObjectBuilder(this.ecscontext);
+            this._builder.set(this);
+        }
+        return this._builder;
+    }
 }

@@ -45,8 +45,9 @@ class TestScene extends GameScene<MyGameContext> {
         testSceneSystem.setPool(this.ecscontext.pool);
         testSceneSystem.initialize();
         //
-        const testObject = GameObject.create(this.ecscontext, 'testObject');
-        testObject.addAs(BitmapComponent);
+        MyGameObjectFactory.getInstance().setBuilder(new MyGameObjectBuilder(this.ecscontext));
+        const testObject = MyGameObjectFactory.getInstance().createTestGameObject();
+        //testObject.builder.addDestroy();
     }
 
     public addToLayer0(displayObject: egret.DisplayObject, childIndex?: number): void {
