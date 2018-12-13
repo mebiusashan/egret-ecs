@@ -55,14 +55,14 @@ class TiledMapViewReactiveSystem extends GameSystem<MyGameContext> implements en
         }
     }
 
-    private createTiledMapLayer(layer: TiledMapLayer): egret.DisplayObjectContainer {
-        if (!layer) {
+    private createTiledMapLayer(layerdata: TiledMapLayer): egret.DisplayObjectContainer {
+        if (!layerdata) {
             return null;
         }
-        const row: number = layer.row;
-        const col: number = layer.col;
-        const grids: TiledMapGrid[][] = layer.grids;
-        let res = new egret.DisplayObjectContainer;
+        const row = layerdata.row;
+        const col = layerdata.col;
+        const grids: TiledMapGrid[][] = layerdata.grids;
+        let layer = new egret.DisplayObjectContainer;
         let grid: TiledMapGrid = null;
         let bitmap: egret.Bitmap = null;
         let texture: egret.Texture = null;
@@ -77,18 +77,94 @@ class TiledMapViewReactiveSystem extends GameSystem<MyGameContext> implements en
                 bitmap.width = grid.width;
                 bitmap.height = grid.height;
                 bitmap.name = j + ':' + i;
-                res.addChild(bitmap);
+                bitmap.visible = false;
+                layer.addChild(bitmap);
             }
         }
-        return res;
+        return layer;
     }
 }
 
 class TiledMapViewExecuteSystem extends GameSystem<MyGameContext> implements entitas.IExecuteSystem, entitas.ISetPool {
+
+    private group1: entitas.Group | null = null;
+    private group2: entitas.Group | null = null;
+    private visibleGrids: egret.Bitmap[] = [];
+
     public execute(): void {
+        const tiledmap = this.group1.getSingleEntity() as GameObject;
+        if (!tiledmap) {
+            return;
+        }
+        const camera = this.group2.getSingleEntity() as GameObject;
+        if (camera) {
+            const tiledMapViewCom = tiledmap.getAs(TiledMapViewComponent);
+            const childrenNum = tiledMapViewCom.numChildren;
+            let tiledMapLayer: egret.DisplayObjectContainer = null;
+            for (let i = 0; i < childrenNum; ++i) {
+                tiledMapLayer = tiledMapViewCom.getChildAt(i) as egret.DisplayObjectContainer;
+                if (tiledMapLayer) {
+                    this.handleLayer(tiledMapLayer, camera, tiledmap);
+                }
+            }
+        }
     }
+
+    private handleLayer(tiledMapLayerDisplay: egret.DisplayObjectContainer, camera: GameObject, tiledMap: GameObject): void {
+        const camera2dCom = camera.getAs(Camera2dComponent);
+        const positionCom = camera.getAs(PositionComponent);
+
+        const hw = camera2dCom.halfWidth;
+        const hh = camera2dCom.halfHeight;
+        const left = positionCom.x - hw;
+        const right = positionCom.x + hw;
+        const top = positionCom.y - hh;
+        const bottom = positionCom.y + hh;
+        const vgrids = this.visibleGrids;
+        for (let i = vgrids.length - 1; i >= 0; --i) {
+            const bitmap = vgrids[i];
+            const show = (Math.abs(left - bitmap.x) <= hw * 2 && Math.abs(top - bitmap.y) < hh * 2);
+            if (!show) {
+                bitmap.visible = false;
+                vgrids.splice(i, 1);
+            }
+        }
+
+        const tiledMapCom = tiledMap.getAs(TiledMapComponent);
+        const tiledMapObject = tiledMapCom.o;
+        const tiledMapLayerObject = tiledMapObject.layers[0];
+
+        const gw = tiledMapLayerObject.gw;
+        const gh = tiledMapLayerObject.gh;
+        
+        const disx = left - 0;
+        const row1 = Math.floor(disx / gw);
+        const row2 = Math.floor((disx + hw * 2) / gw);
+
+        const disy = top - 0;
+        const col1 = Math.floor(disy / gh);
+        const col2 = Math.floor((disy + hh * 2) / gh);
+
+        for (let i = col1; i <= col2; ++i) {
+            for (let j = row1; j <= row2; ++j) {
+                const child = tiledMapLayerDisplay.getChildByName(j + ':' + i);
+                if (child) {
+                    if (!child.visible) {
+                        child.visible = true;
+                        vgrids.push(child as egret.Bitmap);
+                    }
+                }
+                else {
+                    //egret.log('invalid index = ' + j + ':' + i);
+                }
+            }
+        }
+    }
+
     public setPool(pool: entitas.Pool): void {
         const ids = this.ecscontext.ids;
+        this.group1 = pool.getGroup(entitas.Matcher.allOf(ids.TiledMapComponent, ids.TiledMapViewComponent));
+        this.group2 = pool.getGroup(entitas.Matcher.allOf(ids.Camera2dComponent, ids.PositionComponent));
     }
 }
 

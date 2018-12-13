@@ -48,7 +48,7 @@ class TestScene extends GameScene<MyGameContext> {
         //
         const gamecontext = this.gamecontext;
         const posx = gamecontext.stage.stageWidth/2;
-        const posy = gamecontext.stage.stageHeight/2;
+        const posy = gamecontext.stage.stageHeight/2 + 500;
         MyGameObjectFactory.getInstance().setBuilder(new MyGameObjectBuilder(this.ecscontext));
         const testObject1 = MyGameObjectFactory.getInstance().createTestGameObject(posx, posy);
         //const testObject2 = MyGameObjectFactory.getInstance().createTestGameObject(posx + 200, posy);
