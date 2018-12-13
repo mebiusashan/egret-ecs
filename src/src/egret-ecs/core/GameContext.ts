@@ -28,7 +28,7 @@ class GameContext {
     public main: egret.DisplayObjectContainer | null = null;
     public stage: egret.Stage | null = null;
     public gameScene: egret.DisplayObjectContainer | null = null;
-    public keyboard: KeyBoard | null = null;
+    public keyboard: Keyboard | null = null;
     public readonly keystate: any = {};
     public readonly onKeyBoardDown: IKeyboradDown<KeyboradDown> = new entitas.utils.Signal<KeyboradDown>(this);
     public readonly onKeyBoardUp: IKeyboradUp<KeyboradUp> = new entitas.utils.Signal<KeyboradUp>(this);
@@ -58,10 +58,10 @@ class GameContext {
         return true;
     }
 
-    public activeKeyboard(): KeyBoard {
-        this.keyboard = new KeyBoard;
-        this.keyboard.addEventListener(KeyBoard.onkeydown, this.onkeydown, this);
-        this.keyboard.addEventListener(KeyBoard.onkeyup, this.onkeyup, this);
+    public activeKeyboard(): Keyboard {
+        this.keyboard = new Keyboard;
+        this.keyboard.addEventListener(Keyboard.onKeyDown, this.onkeydown, this);
+        this.keyboard.addEventListener(Keyboard.onKeyUp, this.onkeyup, this);
         return this.keyboard;
     }
 

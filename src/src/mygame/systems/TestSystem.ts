@@ -40,19 +40,19 @@ class TestExecuteSystem extends GameSystem<MyGameContext> implements entitas.IIn
             }
 
             posCom = e.getAs(PositionComponent);
-            if (ks[KeyBoard.A] || ks[KeyBoard.keyArrow]) {
+            if (ks[Keyboard.A] || ks[Keyboard.LeftArrow]) {
                 posCom.x += movespeed * -1;
             }
-            else if (ks[KeyBoard.D] || ks[KeyBoard.RightArrow]) {
+            else if (ks[Keyboard.D] || ks[Keyboard.RightArrow]) {
                 posCom.x += movespeed * 1;
             }
             else {
             }
 
-            if (ks[KeyBoard.W] || ks[KeyBoard.UpArrow]) {
+            if (ks[Keyboard.W] || ks[Keyboard.UpArrow]) {
                 posCom.y += movespeed * -1;
             }
-            else if (ks[KeyBoard.S] || ks[KeyBoard.DownArrow]) {
+            else if (ks[Keyboard.S] || ks[Keyboard.DownArrow]) {
                 posCom.y += movespeed * 1;
             }
             else {

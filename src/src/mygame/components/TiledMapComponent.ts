@@ -12,10 +12,9 @@ class TiledMapComponent implements entitas.IComponent, IData {
     }
 }
 
-
 class TiledMapViewComponent extends egret.DisplayObjectContainer implements entitas.IComponent, IView {
-    //public resname: string = '';
     public removeView(): void {
+        this.removeChildren();
         utils.removeFromParent(this);
     }
 }

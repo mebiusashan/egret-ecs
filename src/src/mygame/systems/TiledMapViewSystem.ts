@@ -41,44 +41,47 @@ class TiledMapViewReactiveSystem extends GameSystem<MyGameContext> implements en
     }
 
     private createTiledMapView(tiledMapViewCom: TiledMapViewComponent, tiledMapCom: TiledMapComponent): void {
-        const mapview = tiledMapViewCom;
         const data = tiledMapCom.o;
         const layers = data.layers;
+        if (layers.length === 0) {
+            return;
+        }
+        const mapview = tiledMapViewCom;
         let layer: TiledMapLayer = null;
-        let layerview: egret.DisplayObjectContainer = null;
+        let layerview: TiledMapLayerView = null;
         for (let i = 0, length = layers.length; i < length; ++i) {
             layer = layers[i];
-            layerview = this.createTiledMapLayer(layer);
+            layerview = this.createTiledMapLayerView(layer);
             if (layerview) {
                 mapview.addChild(layerview);
             }
         }
     }
 
-    private createTiledMapLayer(layerdata: TiledMapLayer): egret.DisplayObjectContainer {
+    private createTiledMapLayerView(layerdata: TiledMapLayer): TiledMapLayerView {
         if (!layerdata) {
             return null;
         }
         const row = layerdata.row;
         const col = layerdata.col;
+        if (row === 0 && col === 0) {
+            return null;
+        }
         const grids: TiledMapGrid[][] = layerdata.grids;
-        let layer = new egret.DisplayObjectContainer;
+        let layer = new TiledMapLayerView;
         let grid: TiledMapGrid = null;
-        let bitmap: egret.Bitmap = null;
-        let texture: egret.Texture = null;
+        let gridView: TiledMapGridView = null;
         for (let i = 0; i < col; ++i) {
             for (let j = 0; j < row; ++j) {
                 grid = grids[i][j];
-                bitmap = new egret.Bitmap();
-                texture = RES.getRes('bg_jpg');
-                bitmap.texture = texture;
-                bitmap.x = grid.width * j;
-                bitmap.y = grid.height * i;
-                bitmap.width = grid.width;
-                bitmap.height = grid.height;
-                bitmap.name = j + ':' + i;
-                bitmap.visible = false;
-                layer.addChild(bitmap);
+                gridView = new TiledMapGridView();
+                gridView.texture = RES.getRes('bg_jpg');
+                gridView.x = grid.width * j;
+                gridView.y = grid.height * i;
+                gridView.width = grid.width;
+                gridView.height = grid.height;
+                gridView.visible = false;
+                layer.addGrid(gridView, j, i);
             }
         }
         return layer;
@@ -89,7 +92,6 @@ class TiledMapViewExecuteSystem extends GameSystem<MyGameContext> implements ent
 
     private group1: entitas.Group | null = null;
     private group2: entitas.Group | null = null;
-    private visibleGrids: egret.Bitmap[] = [];
 
     public execute(): void {
         const tiledmap = this.group1.getSingleEntity() as GameObject;
@@ -100,65 +102,47 @@ class TiledMapViewExecuteSystem extends GameSystem<MyGameContext> implements ent
         if (camera) {
             const tiledMapViewCom = tiledmap.getAs(TiledMapViewComponent);
             const childrenNum = tiledMapViewCom.numChildren;
-            let tiledMapLayer: egret.DisplayObjectContainer = null;
-            for (let i = 0; i < childrenNum; ++i) {
-                tiledMapLayer = tiledMapViewCom.getChildAt(i) as egret.DisplayObjectContainer;
-                if (tiledMapLayer) {
-                    this.handleLayer(tiledMapLayer, camera, tiledmap);
+            if (childrenNum > 0) {
+                let tiledMapLayer: TiledMapLayerView = null;
+                for (let i = 0; i < childrenNum; ++i) {
+                    tiledMapLayer = tiledMapViewCom.getChildAt(i) as TiledMapLayerView;
+                    if (tiledMapLayer) {
+                        this.handleLayer(tiledMapLayer, camera, tiledmap);
+                    }
                 }
             }
         }
     }
 
-    private handleLayer(tiledMapLayerDisplay: egret.DisplayObjectContainer, camera: GameObject, tiledMap: GameObject): void {
+    private handleLayer(tiledMapLayerView: TiledMapLayerView, camera: GameObject, tiledMap: GameObject): void {
+        
         const camera2dCom = camera.getAs(Camera2dComponent);
         const positionCom = camera.getAs(PositionComponent);
-
+        //已经在显示的，就更新掉，如果和摄像机不再碰撞，就关掉
         const hw = camera2dCom.halfWidth;
         const hh = camera2dCom.halfHeight;
         const left = positionCom.x - hw;
         const right = positionCom.x + hw;
         const top = positionCom.y - hh;
         const bottom = positionCom.y + hh;
-        const vgrids = this.visibleGrids;
-        for (let i = vgrids.length - 1; i >= 0; --i) {
-            const bitmap = vgrids[i];
-            const show = (Math.abs(left - bitmap.x) <= hw * 2 && Math.abs(top - bitmap.y) < hh * 2);
-            if (!show) {
-                bitmap.visible = false;
-                vgrids.splice(i, 1);
-            }
-        }
-
+        tiledMapLayerView.removeInvisibleGridsByCameraView(left, right, top, bottom, hw, hh);
+        
+        //直接用index算出格子，定位出当前显示的格子。这个就是tiledmap的用处
         const tiledMapCom = tiledMap.getAs(TiledMapComponent);
         const tiledMapObject = tiledMapCom.o;
         const tiledMapLayerObject = tiledMapObject.layers[0];
-
         const gw = tiledMapLayerObject.gw;
         const gh = tiledMapLayerObject.gh;
-        
+        //
         const disx = left - 0;
         const row1 = Math.floor(disx / gw);
         const row2 = Math.floor((disx + hw * 2) / gw);
-
+        //
         const disy = top - 0;
         const col1 = Math.floor(disy / gh);
         const col2 = Math.floor((disy + hh * 2) / gh);
-
-        for (let i = col1; i <= col2; ++i) {
-            for (let j = row1; j <= row2; ++j) {
-                const child = tiledMapLayerDisplay.getChildByName(j + ':' + i);
-                if (child) {
-                    if (!child.visible) {
-                        child.visible = true;
-                        vgrids.push(child as egret.Bitmap);
-                    }
-                }
-                else {
-                    //egret.log('invalid index = ' + j + ':' + i);
-                }
-            }
-        }
+        //
+        tiledMapLayerView.addVisibleGridsByRowAndColIndex(row1, row2, col1, col2);
     }
 
     public setPool(pool: entitas.Pool): void {

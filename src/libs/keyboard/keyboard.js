@@ -8,151 +8,174 @@ var __extends = this && this.__extends || function __extends(t, e) {
 for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
 r.prototype = e.prototype, t.prototype = new r();
 };
-var KeyBoard = (function (_super) {
-    __extends(KeyBoard, _super);
-    function KeyBoard() {
+//  Copyright (c) 2014-present, Egret Technology.
+//  All rights reserved.
+//  Redistribution and use in source and binary forms, with or without
+//  modification, are permitted provided that the following conditions are met:
+//
+//     * Redistributions of source code must retain the above copyright
+//       notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above copyright
+//       notice, this list of conditions and the following disclaimer in the
+//       documentation and/or other materials provided with the distribution.
+//     * Neither the name of the Egret nor the
+//       names of its contributors may be used to endorse or promote products
+//       derived from this software without specific prior written permission.
+//
+//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
+//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
+//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+//////////////////////////////////////////////////////////////////////////////////////
+var Keyboard = (function (_super) {
+    __extends(Keyboard, _super);
+    function Keyboard() {
         var _this = _super.call(this) || this;
+        _this.inputs = [];
         _this.keyValue = {
-            "27": KeyBoard.Esc,
-            "112": KeyBoard.F1,
-            "113": KeyBoard.F2,
-            "114": KeyBoard.F3,
-            "115": KeyBoard.F4,
-            "116": KeyBoard.F5,
-            "117": KeyBoard.F6,
-            "118": KeyBoard.F7,
-            "119": KeyBoard.F8,
-            "120": KeyBoard.F9,
-            "121": KeyBoard.F10,
-            "122": KeyBoard.F11,
-            "123": KeyBoard.F12,
-            "42": KeyBoard.PrintScreen,
-            "145": KeyBoard.ScrollLock,
-            "19": KeyBoard.PauseBreak,
-            "192": KeyBoard.key_Points,
-            "49": KeyBoard.key_1,
-            "50": KeyBoard.key_2,
-            "51": KeyBoard.key_3,
-            "52": KeyBoard.key_4,
-            "53": KeyBoard.key_5,
-            "54": KeyBoard.key_6,
-            "55": KeyBoard.key_7,
-            "56": KeyBoard.key_8,
-            "57": KeyBoard.key_9,
-            "48": KeyBoard.key_0,
-            "189": KeyBoard.key_Sub,
-            "187": KeyBoard.key_Plus,
-            "8": KeyBoard.Backspace,
-            "45": KeyBoard.Insert,
-            "36": KeyBoard.Home,
-            "33": KeyBoard.PageUp,
-            "144": KeyBoard.NumLock,
-            "111": KeyBoard.Num_Slash,
-            "106": KeyBoard.Num_Mul,
-            "109": KeyBoard.Num_Sub,
-            "9": KeyBoard.Tab,
-            "81": KeyBoard.Q,
-            "87": KeyBoard.W,
-            "69": KeyBoard.E,
-            "82": KeyBoard.R,
-            "84": KeyBoard.T,
-            "89": KeyBoard.Y,
-            "85": KeyBoard.U,
-            "73": KeyBoard.I,
-            "79": KeyBoard.O,
-            "80": KeyBoard.P,
-            "219": KeyBoard.brace1,
-            "221": KeyBoard.brace2,
-            "13": KeyBoard.CnterEnter,
-            "46": KeyBoard.Delete,
-            "35": KeyBoard.End,
-            "34": KeyBoard.PageDown,
-            "103": KeyBoard.Num_7,
-            "104": KeyBoard.Num_8,
-            "105": KeyBoard.Num_9,
-            "107": KeyBoard.Num_Plus,
-            "20": KeyBoard.CapsLock,
-            "65": KeyBoard.A,
-            "83": KeyBoard.S,
-            "68": KeyBoard.D,
-            "70": KeyBoard.F,
-            "71": KeyBoard.G,
-            "72": KeyBoard.H,
-            "74": KeyBoard.J,
-            "75": KeyBoard.K,
-            "76": KeyBoard.L,
-            "186": KeyBoard.semicolon,
-            "222": KeyBoard.quotes,
-            "220": KeyBoard.bar,
-            "100": KeyBoard.Num_4,
-            "101": KeyBoard.Num_5,
-            "102": KeyBoard.Num_6,
-            "16": KeyBoard.key_Shift,
-            "90": KeyBoard.Z,
-            "88": KeyBoard.X,
-            "67": KeyBoard.C,
-            "86": KeyBoard.V,
-            "66": KeyBoard.B,
-            "78": KeyBoard.N,
-            "77": KeyBoard.M,
-            "188": KeyBoard.key_Semicolon,
-            "190": KeyBoard.key_Dot,
-            "191": KeyBoard.question,
-            "38": KeyBoard.UpArrow,
-            "97": KeyBoard.Num_1,
-            "98": KeyBoard.Num_2,
-            "99": KeyBoard.Num_3,
-            // "13" : KeyBoard.Num_Enter,
-            "17": KeyBoard.left_Ctrl,
-            "91": KeyBoard.Left_Win,
-            "18": KeyBoard.key_Alt,
-            "32": KeyBoard.SPACE,
-            "92": KeyBoard.RIGHT_WIN,
-            "93": KeyBoard.NoteSign,
-            "37": KeyBoard.keyArrow,
-            "40": KeyBoard.DownArrow,
-            "39": KeyBoard.RightArrow,
-            "96": KeyBoard.Num_0,
-            "110": KeyBoard.Num_dot
+            "27": Keyboard.Esc,
+            "112": Keyboard.F1,
+            "113": Keyboard.F2,
+            "114": Keyboard.F3,
+            "115": Keyboard.F4,
+            "116": Keyboard.F5,
+            "117": Keyboard.F6,
+            "118": Keyboard.F7,
+            "119": Keyboard.F8,
+            "120": Keyboard.F9,
+            "121": Keyboard.F10,
+            "122": Keyboard.F11,
+            "123": Keyboard.F12,
+            "42": Keyboard.PrintScreen,
+            "145": Keyboard.ScrollLock,
+            "19": Keyboard.PauseBreak,
+            "192": Keyboard.Key_Points,
+            "49": Keyboard.Key_1,
+            "50": Keyboard.Key_2,
+            "51": Keyboard.Key_3,
+            "52": Keyboard.Key_4,
+            "53": Keyboard.Key_5,
+            "54": Keyboard.Key_6,
+            "55": Keyboard.Key_7,
+            "56": Keyboard.Key_8,
+            "57": Keyboard.Key_9,
+            "48": Keyboard.Key_0,
+            "189": Keyboard.Key_Sub,
+            "187": Keyboard.Key_Plus,
+            "8": Keyboard.Backspace,
+            "45": Keyboard.Insert,
+            "36": Keyboard.Home,
+            "33": Keyboard.PageUp,
+            "144": Keyboard.Num_Lock,
+            "111": Keyboard.Num_Slash,
+            "106": Keyboard.Num_Mul,
+            "109": Keyboard.Num_Sub,
+            "9": Keyboard.Tab,
+            "81": Keyboard.Q,
+            "87": Keyboard.W,
+            "69": Keyboard.E,
+            "82": Keyboard.R,
+            "84": Keyboard.T,
+            "89": Keyboard.Y,
+            "85": Keyboard.U,
+            "73": Keyboard.I,
+            "79": Keyboard.O,
+            "80": Keyboard.P,
+            "219": Keyboard.LBraces,
+            "221": Keyboard.RBraces,
+            "13": Keyboard.Enter,
+            "46": Keyboard.Delete,
+            "35": Keyboard.End,
+            "34": Keyboard.PageDown,
+            "103": Keyboard.Num_7,
+            "104": Keyboard.Num_8,
+            "105": Keyboard.Num_9,
+            "107": Keyboard.Num_Plus,
+            "20": Keyboard.CapsLock,
+            "65": Keyboard.A,
+            "83": Keyboard.S,
+            "68": Keyboard.D,
+            "70": Keyboard.F,
+            "71": Keyboard.G,
+            "72": Keyboard.H,
+            "74": Keyboard.J,
+            "75": Keyboard.K,
+            "76": Keyboard.L,
+            "186": Keyboard.Semicolon,
+            "222": Keyboard.Quotes,
+            "220": Keyboard.Bar,
+            "100": Keyboard.Num_4,
+            "101": Keyboard.Num_5,
+            "102": Keyboard.Num_6,
+            "16": Keyboard.LShift,
+            "90": Keyboard.Z,
+            "88": Keyboard.X,
+            "67": Keyboard.C,
+            "86": Keyboard.V,
+            "66": Keyboard.B,
+            "78": Keyboard.N,
+            "77": Keyboard.M,
+            "188": Keyboard.Key_Semicolon,
+            "190": Keyboard.Key_Dot,
+            "191": Keyboard.Question,
+            "38": Keyboard.UpArrow,
+            "97": Keyboard.Num_1,
+            "98": Keyboard.Num_2,
+            "99": Keyboard.Num_3,
+            "17": Keyboard.LCtrl,
+            "91": Keyboard.LWin,
+            "18": Keyboard.LAlt,
+            "32": Keyboard.Space,
+            "92": Keyboard.RWin,
+            "93": Keyboard.NoteSign,
+            "37": Keyboard.LeftArrow,
+            "40": Keyboard.DownArrow,
+            "39": Keyboard.RightArrow,
+            "96": Keyboard.Num_0,
+            "110": Keyboard.Num_Dot
         };
-        _this.eventData = { inputs: [], changedKey: "" };
         _this.init();
         return _this;
     }
-    KeyBoard.prototype.init = function () {
+    Keyboard.prototype.init = function () {
         var self = this;
         document.onkeydown = function (event) {
             var e = event || window.event || arguments.callee.caller.arguments[0];
             self.addKey(e);
-            self.dispatchEventWith(KeyBoard.onkeydown, true, self.eventData.inputs, true);
+            self.dispatchEventWith(Keyboard.onKeyDown, true, self.inputs, true);
         };
         document.onkeyup = function (event) {
             var e = event || window.event || arguments.callee.caller.arguments[0];
-            const keycode = e.keyCode;
-            const keyvalue = self.keyValue;
+            var keycode = e.keyCode;
+            var keyvalue = self.keyValue;
             if (keycode in keyvalue) {
                 var vv = keyvalue[keycode];
-                self.dispatchEventWith(KeyBoard.onkeyup, true, [vv], true);
+                self.dispatchEventWith(Keyboard.onKeyUp, true, [vv], true);
                 self.removeKey(vv);
             }
         };
     };
-    //处理键盘按下对应keycode
-    KeyBoard.prototype.addKey = function (e) {
-        const keycode = e.keyCode;
-        const keyvalue = this.keyValue;
+    Keyboard.prototype.addKey = function (e) {
+        var keycode = e.keyCode;
+        var keyvalue = this.keyValue;
         if (keycode in keyvalue) {
-            const key = keyvalue[keycode];
-            const inputs = this.eventData.inputs;
-            const index = inputs.indexOf(key);
+            var key = keyvalue[keycode];
+            var inputs = this.inputs;
+            var index = inputs.indexOf(key);
             if (index < 0) {
                 inputs.push(key);
             }
         }
     };
-    
-    KeyBoard.prototype.removeKey = function (key) {
-        const inputs = this.eventData.inputs;
+    Keyboard.prototype.removeKey = function (key) {
+        var inputs = this.inputs;
         for (var i = 0, length = inputs.length; i < length; ++i) {
             if (inputs[i] === key) {
                 inputs.splice(i, 1);
@@ -160,121 +183,118 @@ var KeyBoard = (function (_super) {
             }
         }
     };
-    /**
-     * 同一时刻按下多个键：则返回多个键的字符串数组。
-     */
-    KeyBoard.onkeydown = "KeyBoardonkeydown";
-    KeyBoard.onkeyup = "KeyBoardonkeyup";
-    KeyBoard.NumLock = "NumLock";
-    KeyBoard.Num_Slash = "num_/";
-    KeyBoard.Num_Mul = "num_*";
-    KeyBoard.Num_Sub = "num_-";
-    KeyBoard.Num_7 = "num_7";
-    KeyBoard.Num_8 = "num_8";
-    KeyBoard.Num_9 = "num_9";
-    KeyBoard.Num_Plus = "num_+";
-    KeyBoard.Num_4 = "num_4";
-    KeyBoard.Num_5 = "num_5";
-    KeyBoard.Num_6 = "num_6";
-    KeyBoard.Num_1 = "num_1";
-    KeyBoard.Num_2 = "num_2";
-    KeyBoard.Num_3 = "num_3";
-    KeyBoard.Num_Enter = "num_Enter";
-    KeyBoard.Num_0 = "num_0";
-    KeyBoard.Num_dot = "num_.";
+    Keyboard.onKeyDown = "onKeyDown";
+    Keyboard.onKeyUp = "onKeyUp";
+    Keyboard.Num_Lock = "NumLock";
+    Keyboard.Num_Slash = "Num_/";
+    Keyboard.Num_Mul = "Num_*";
+    Keyboard.Num_Sub = "Num_-";
+    Keyboard.Num_Plus = "Num_+";
+    Keyboard.Num_1 = "Num_1";
+    Keyboard.Num_2 = "Num_2";
+    Keyboard.Num_3 = "Num_3";
+    Keyboard.Num_4 = "Num_4";
+    Keyboard.Num_5 = "Num_5";
+    Keyboard.Num_6 = "Num_6";
+    Keyboard.Num_7 = "Num_7";
+    Keyboard.Num_8 = "Num_8";
+    Keyboard.Num_9 = "Num_9";
+    Keyboard.Num_0 = "Num_0";
+    Keyboard.Num_Enter = "Num_Enter";
+    Keyboard.Num_Dot = "Num_.";
     //第一行
-    KeyBoard.Esc = "Esc"; //27
-    KeyBoard.F1 = "F1";
-    KeyBoard.F2 = "F2";
-    KeyBoard.F3 = "F3";
-    KeyBoard.F4 = "F4";
-    KeyBoard.F5 = "F5";
-    KeyBoard.F6 = "F6";
-    KeyBoard.F7 = "F7";
-    KeyBoard.F8 = "F8";
-    KeyBoard.F9 = "F9";
-    KeyBoard.F10 = "F10";
-    KeyBoard.F11 = "F11";
-    KeyBoard.F12 = "F12";
-    KeyBoard.PrintScreen = "PrintScreen";
-    KeyBoard.ScrollLock = "ScrollLock";
-    KeyBoard.PauseBreak = "PauseBreak";
+    Keyboard.Esc = "Esc";
+    Keyboard.F1 = "F1";
+    Keyboard.F2 = "F2";
+    Keyboard.F3 = "F3";
+    Keyboard.F4 = "F4";
+    Keyboard.F5 = "F5";
+    Keyboard.F6 = "F6";
+    Keyboard.F7 = "F7";
+    Keyboard.F8 = "F8";
+    Keyboard.F9 = "F9";
+    Keyboard.F10 = "F10";
+    Keyboard.F11 = "F11";
+    Keyboard.F12 = "F12";
+    Keyboard.PrintScreen = "PrintScreen";
+    Keyboard.ScrollLock = "ScrollLock";
+    Keyboard.PauseBreak = "PauseBreak";
     //第二行
-    KeyBoard.key_Points = "`";
-    KeyBoard.key_1 = "1";
-    KeyBoard.key_2 = "2";
-    KeyBoard.key_3 = "3";
-    KeyBoard.key_4 = "4";
-    KeyBoard.key_5 = "5";
-    KeyBoard.key_6 = "6";
-    KeyBoard.key_7 = "7";
-    KeyBoard.key_8 = "8";
-    KeyBoard.key_9 = "9";
-    KeyBoard.key_0 = "0";
-    KeyBoard.key_Sub = "-";
-    KeyBoard.key_Plus = "=";
-    KeyBoard.Backspace = "Backspace";
-    KeyBoard.Insert = "Insert";
-    KeyBoard.Home = "Home";
-    KeyBoard.PageUp = "PageUp";
+    Keyboard.Key_Points = "`";
+    Keyboard.Key_1 = "1";
+    Keyboard.Key_2 = "2";
+    Keyboard.Key_3 = "3";
+    Keyboard.Key_4 = "4";
+    Keyboard.Key_5 = "5";
+    Keyboard.Key_6 = "6";
+    Keyboard.Key_7 = "7";
+    Keyboard.Key_8 = "8";
+    Keyboard.Key_9 = "9";
+    Keyboard.Key_0 = "0";
+    Keyboard.Key_Sub = "-";
+    Keyboard.Key_Plus = "=";
+    Keyboard.Backspace = "Backspace";
+    Keyboard.Insert = "Insert";
+    Keyboard.Home = "Home";
+    Keyboard.PageUp = "PageUp";
     //第三行
-    KeyBoard.Tab = "Tab";
-    KeyBoard.Q = "Q";
-    KeyBoard.W = "W";
-    KeyBoard.E = "E";
-    KeyBoard.R = "R";
-    KeyBoard.T = "T";
-    KeyBoard.Y = "Y";
-    KeyBoard.U = "U";
-    KeyBoard.I = "I";
-    KeyBoard.O = "O";
-    KeyBoard.P = "P";
-    KeyBoard.brace1 = "[";
-    KeyBoard.brace2 = "]";
-    KeyBoard.CnterEnter = "Enter";
-    KeyBoard.Delete = "Delete";
-    KeyBoard.End = "End";
-    KeyBoard.PageDown = "PageDown";
+    Keyboard.Tab = "Tab";
+    Keyboard.Q = "Q";
+    Keyboard.W = "W";
+    Keyboard.E = "E";
+    Keyboard.R = "R";
+    Keyboard.T = "T";
+    Keyboard.Y = "Y";
+    Keyboard.U = "U";
+    Keyboard.I = "I";
+    Keyboard.O = "O";
+    Keyboard.P = "P";
+    Keyboard.LBraces = "[";
+    Keyboard.RBraces = "]";
+    Keyboard.Enter = "Enter";
+    Keyboard.Delete = "Delete";
+    Keyboard.End = "End";
+    Keyboard.PageDown = "PageDown";
     //第四行
-    KeyBoard.CapsLock = "CapsLock";
-    KeyBoard.A = "A";
-    KeyBoard.S = "S";
-    KeyBoard.D = "D";
-    KeyBoard.F = "F";
-    KeyBoard.G = "G";
-    KeyBoard.H = "H";
-    KeyBoard.J = "J";
-    KeyBoard.K = "K";
-    KeyBoard.L = "L";
-    KeyBoard.semicolon = ";";
-    KeyBoard.quotes = ",";
-    KeyBoard.bar = "|";
+    Keyboard.CapsLock = "CapsLock";
+    Keyboard.A = "A";
+    Keyboard.S = "S";
+    Keyboard.D = "D";
+    Keyboard.F = "F";
+    Keyboard.G = "G";
+    Keyboard.H = "H";
+    Keyboard.J = "J";
+    Keyboard.K = "K";
+    Keyboard.L = "L";
+    Keyboard.Semicolon = ";";
+    Keyboard.Quotes = ",";
+    Keyboard.Bar = "|";
     //第五行
-    KeyBoard.key_Shift = "Shift";
-    KeyBoard.Z = "Z";
-    KeyBoard.X = "X";
-    KeyBoard.C = "C";
-    KeyBoard.V = "V";
-    KeyBoard.B = "B";
-    KeyBoard.N = "N";
-    KeyBoard.M = "M";
-    KeyBoard.key_Semicolon = ",";
-    KeyBoard.key_Dot = ".";
-    KeyBoard.question = "/";
-    KeyBoard.Right_Shift = "Shift";
-    KeyBoard.UpArrow = "up";
+    Keyboard.LShift = "LShift";
+    Keyboard.RShift = "RShift";
+    Keyboard.Z = "Z";
+    Keyboard.X = "X";
+    Keyboard.C = "C";
+    Keyboard.V = "V";
+    Keyboard.B = "B";
+    Keyboard.N = "N";
+    Keyboard.M = "M";
+    Keyboard.Key_Semicolon = ",";
+    Keyboard.Key_Dot = ".";
+    Keyboard.Question = "/";
+    Keyboard.UpArrow = "UpArrow";
     //第六行
-    KeyBoard.left_Ctrl = "Ctrl";
-    KeyBoard.Left_Win = "left_win";
-    KeyBoard.key_Alt = "Alt";
-    KeyBoard.SPACE = "SPACE";
-    KeyBoard.RIGH_Alt = "RIGH_Alt";
-    KeyBoard.RIGHT_WIN = "right_win";
-    KeyBoard.NoteSign = "NoteSign";
-    KeyBoard.RIGHT_Ctrl = "Ctrl";
-    KeyBoard.keyArrow = "left";
-    KeyBoard.DownArrow = "down";
-    KeyBoard.RightArrow = "right";
-    return KeyBoard;
+    Keyboard.LCtrl = "LCtrl";
+    Keyboard.RCtrl = "RCtrl";
+    Keyboard.LAlt = "LAlt";
+    Keyboard.RAlt = "RAlt";
+    Keyboard.LWin = "LWin";
+    Keyboard.RWin = "RWin";
+    Keyboard.Space = "Space";
+    Keyboard.NoteSign = "NoteSign";
+    Keyboard.LeftArrow = "LeftArrow";
+    Keyboard.DownArrow = "DownArrow";
+    Keyboard.RightArrow = "RightArrow";
+    return Keyboard;
 }(egret.EventDispatcher));
-__reflect(KeyBoard.prototype, "KeyBoard");
+__reflect(Keyboard.prototype, "Keyboard");
