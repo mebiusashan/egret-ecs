@@ -85,9 +85,11 @@ class TestSystem extends GameSystems<MyGameContext> {
     public setPool(pool: entitas.Pool): void {
         const ecscontext = this.ecscontext;
         const gamecontext = this.gamecontext;
+        this.add(pool.createSystem(new BeginSystem(ecscontext, gamecontext)));
         this.add(pool.createSystem(new TestInputSystem(ecscontext, gamecontext)));
         this.add(pool.createSystem(new TestExecuteSystem(ecscontext, gamecontext)));
         this.add(pool.createSystem(new TestViewSystem(ecscontext, gamecontext)));
+        this.add(pool.createSystem(new EndSystem(ecscontext, gamecontext)));
         this.add(pool.createSystem(new DestroySystem(ecscontext, gamecontext)));
     }
 }

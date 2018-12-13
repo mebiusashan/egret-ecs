@@ -99,16 +99,21 @@ class TiledMapViewExecuteSystem extends GameSystem<MyGameContext> implements ent
             return;
         }
         const camera = this.group2.getSingleEntity() as GameObject;
-        if (camera) {
-            const tiledMapViewCom = tiledmap.getAs(TiledMapViewComponent);
-            const childrenNum = tiledMapViewCom.numChildren;
-            if (childrenNum > 0) {
-                let tiledMapLayer: TiledMapLayerView = null;
-                for (let i = 0; i < childrenNum; ++i) {
-                    tiledMapLayer = tiledMapViewCom.getChildAt(i) as TiledMapLayerView;
-                    if (tiledMapLayer) {
-                        this.handleLayer(tiledMapLayer, camera, tiledmap);
-                    }
+        if (!camera) {
+            return;
+        }
+        const camera2dCom = camera.getAs(Camera2dComponent);
+        if (!camera2dCom.viewChanged) {
+            return;
+        }
+        const tiledMapViewCom = tiledmap.getAs(TiledMapViewComponent);
+        const childrenNum = tiledMapViewCom.numChildren;
+        if (childrenNum > 0) {
+            let tiledMapLayer: TiledMapLayerView = null;
+            for (let i = 0; i < childrenNum; ++i) {
+                tiledMapLayer = tiledMapViewCom.getChildAt(i) as TiledMapLayerView;
+                if (tiledMapLayer) {
+                    this.handleLayer(tiledMapLayer, camera, tiledmap);
                 }
             }
         }
