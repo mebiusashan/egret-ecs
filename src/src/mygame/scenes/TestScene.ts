@@ -50,18 +50,21 @@ class TestScene extends GameScene<MyGameContext> {
         const posy = gamecontext.stage.stageHeight/2;
         MyGameObjectFactory.getInstance().setBuilder(new MyGameObjectBuilder(this.ecscontext));
         const testObject1 = MyGameObjectFactory.getInstance().createTestGameObject(posx, posy);
-        const testObject2 = MyGameObjectFactory.getInstance().createTestGameObject(posx + 200, posy);
+        //const testObject2 = MyGameObjectFactory.getInstance().createTestGameObject(posx + 200, posy);
         this.testTileMap();
     }
 
     private testTileMap(): void {
+        const col = 4;
+        const row = 3;
+        const gridsize = 200;
         const testTiledMap = MyGameObjectFactory.getInstance().createTestTiledMap('TiledMap');
         const tiledMapCom = testTiledMap.getAs(TiledMapComponent);
         const tlm = tiledMapCom.o;
-        const layer = new TiledMapLayer('testlayer', tlm, 3, 4, 200, 200);
+        const layer = new TiledMapLayer('testlayer', tlm, row, col, gridsize, gridsize);
         tlm.addTiledMapLayer(layer);
-        for (let i = 0; i < 4; ++i) {
-            for (let j = 0; j < 3; ++j) {
+        for (let i = 0; i < col; ++i) {
+            for (let j = 0; j < row; ++j) {
                 layer.addGrid(j, i);
             }
         }
