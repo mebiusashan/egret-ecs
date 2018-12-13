@@ -43,8 +43,11 @@ class MyGameObjectBuilder extends GameObjectBuilder {
     }
 
     public addTiledMap(tiledMapName: string): GameObjectBuilder {
+        
         const tiledMapCom = this.gameObject.addAs(TiledMapComponent);
         tiledMapCom.o = new TiledMap(tiledMapName);
+
+        this.gameObject.addAs(TiledMapViewComponent);
         return this;
     }
 }

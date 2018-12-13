@@ -55,18 +55,10 @@ class TestScene extends GameScene<MyGameContext> {
     }
 
     private testTileMap(): void {
-        // const tlm = new TiledMap('testmap');
-        // const layer = new TiledMapLayer('testlayer', tlm, 3, 4, 100, 100);
-        // const layer1 = tlm.addTiledMapLayer(layer);
-        // for (let i = 0; i < 4; ++i) {
-        //     for (let j = 0; j < 3; ++j) {
-        //         layer1.addGrid(j, i);
-        //     }
-        // }
         const testTiledMap = MyGameObjectFactory.getInstance().createTestTiledMap('TiledMap');
         const tiledMapCom = testTiledMap.getAs(TiledMapComponent);
         const tlm = tiledMapCom.o;
-        const layer = new TiledMapLayer('testlayer', tlm, 3, 4, 100, 100);
+        const layer = new TiledMapLayer('testlayer', tlm, 3, 4, 200, 200);
         tlm.addTiledMapLayer(layer);
         for (let i = 0; i < 4; ++i) {
             for (let j = 0; j < 3; ++j) {
@@ -77,6 +69,10 @@ class TestScene extends GameScene<MyGameContext> {
 
     public addToLayer0(displayObject: egret.DisplayObject, childIndex?: number): void {
         this.addToLayer(this.layer0, displayObject, childIndex);
+    }
+
+    public addToLayer1(displayObject: egret.DisplayObject, childIndex?: number): void {
+        this.addToLayer(this.layer1, displayObject, childIndex);
     }
 }
 

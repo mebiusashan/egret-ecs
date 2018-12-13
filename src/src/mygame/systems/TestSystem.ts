@@ -30,7 +30,7 @@ class TestExecuteSystem extends GameSystem<MyGameContext> implements entitas.IIn
             e = ens[i] as GameObject;
             bitmapCom = e.getAs(BitmapComponent);
             if (!bitmapCom.parent) {
-                scene.addToLayer0(bitmapCom, 10000);
+                scene.addToLayer1(bitmapCom, 10000);
                 bitmapCom.texture = RES.getRes('egret_icon_png');
                 bitmapCom.anchorOffsetX = bitmapCom.width/2;
                 bitmapCom.anchorOffsetY = bitmapCom.height/2;
