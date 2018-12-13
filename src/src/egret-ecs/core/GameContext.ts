@@ -8,6 +8,19 @@
 /**
  * 游戏核心上下文
  */
+
+
+interface KeyboradDown { (data: any[]): void; }
+interface IKeyboradDown<T> extends entitas.utils.ISignal<T> {
+    dispatch(data: any[]): void;
+}
+
+interface KeyboradUp { (data: any[]): void; }
+interface IKeyboradUp<T> extends entitas.utils.ISignal<T> {
+    dispatch(data: any[]): void;
+}
+
+
 class GameContext {
 
     public dtMs: number = 0;
@@ -15,6 +28,10 @@ class GameContext {
     public main: egret.DisplayObjectContainer | null = null;
     public stage: egret.Stage | null = null;
     public gameScene: egret.DisplayObjectContainer | null = null;
+    public keyboard: KeyBoard | null = null;
+    public readonly keystate: any = {};
+    public readonly onKeyBoardDown: IKeyboradDown<KeyboradDown> = new entitas.utils.Signal<KeyboradDown>(this);
+    public readonly onKeyBoardUp: IKeyboradUp<KeyboradUp> = new entitas.utils.Signal<KeyboradUp>(this);
 
     public setRoot(main: egret.DisplayObjectContainer): GameContext {
         this.main = main;
@@ -23,6 +40,8 @@ class GameContext {
     }
 
     public clear(): GameContext {
+        this.onKeyBoardDown.clear();
+        this.onKeyBoardUp.clear();
         return this;
     }
 
@@ -37,5 +56,30 @@ class GameContext {
         this.gameScene = target;
         this.main.addChild(target);
         return true;
+    }
+
+    public activeKeyboard(): KeyBoard {
+        this.keyboard = new KeyBoard;
+        this.keyboard.addEventListener(KeyBoard.onkeydown, this.onkeydown, this);
+        this.keyboard.addEventListener(KeyBoard.onkeyup, this.onkeyup, this);
+        return this.keyboard;
+    }
+
+    private onkeydown = (event) => {
+        if (this.keyboard) {
+            this.onKeyBoardDown.dispatch(event.data);
+        }
+        else {
+            egret.error('keyboard is null');
+        }
+    }
+
+    private onkeyup = (event) => {
+        if (this.keyboard) {
+            this.onKeyBoardUp.dispatch(event.data);
+        }
+        else {
+            egret.error('keyboard is null');
+        }
     }
 }

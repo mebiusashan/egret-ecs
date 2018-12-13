@@ -14,7 +14,6 @@ class TestExecuteSystem extends GameSystem<MyGameContext> implements entitas.IIn
     }
 
     public initialize(): any {
-
     }
 
     public execute(): void {
@@ -39,6 +38,14 @@ class TestExecuteSystem extends GameSystem<MyGameContext> implements entitas.IIn
     }
 }
 
+class TestInputSystem extends GameSystems<MyGameContext> {
+    public setPool(pool: entitas.Pool): void {
+        const ecscontext = this.ecscontext;
+        const gamecontext = this.gamecontext;
+        this.add(pool.createSystem(new KeyboardSystem(ecscontext, gamecontext)));
+    }
+}
+
 class TestViewSystem extends GameSystems<MyGameContext> {
     public setPool(pool: entitas.Pool): void {
         const ecscontext = this.ecscontext;
@@ -51,6 +58,8 @@ class TestSystem extends GameSystems<MyGameContext> {
     public setPool(pool: entitas.Pool): void {
         const ecscontext = this.ecscontext;
         const gamecontext = this.gamecontext;
+        
+        this.add(pool.createSystem(new TestInputSystem(ecscontext, gamecontext)));
         this.add(pool.createSystem(new TestExecuteSystem(ecscontext, gamecontext)));
         this.add(pool.createSystem(new TestViewSystem(ecscontext, gamecontext)));
         this.add(pool.createSystem(new DestroySystem(ecscontext, gamecontext)));

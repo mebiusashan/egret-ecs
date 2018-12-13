@@ -29,6 +29,10 @@
     },
     {
       "name": "promise"
+    },
+    {
+      "name": "keyboard",
+      "path": "./libs/keyboard"
     }
   ]
 }

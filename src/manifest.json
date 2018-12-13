@@ -8,7 +8,8 @@
 		"libs/entitas/entitas.js",
 		"libs/modules/dragonBones/dragonBones.js",
 		"libs/modules/game/game.js",
-		"libs/modules/promise/promise.js"
+		"libs/modules/promise/promise.js",
+		"libs/keyboard/keyboard.js"
 	],
 	"game": [
 		"bin-debug/egret-ecs/core/GameScene.js",
@@ -37,6 +38,7 @@
 		"bin-debug/egret-ecs/systems/DestroySystem.js",
 		"bin-debug/egret-ecs/core/GameObject.js",
 		"bin-debug/LoadingUI.js",
+		"bin-debug/egret-ecs/systems/KeyboardSystem.js",
 		"bin-debug/egret-ecs/ui/SimpleButton.js",
 		"bin-debug/egret-ecs/ui/TimeTextField.js",
 		"bin-debug/egret-ecs/utils/base.js",
