@@ -60,7 +60,8 @@ class MyGameObjectBuilder extends GameObjectBuilder {
 
     public addPosition(x: number, y: number): MyGameObjectBuilder {
         const posCom = this.gameObject.addAs(PositionComponent);
-        posCom.setTo(x, y);
+        posCom.x = x;
+        posCom.y = y;
         return this;
     }
 }
