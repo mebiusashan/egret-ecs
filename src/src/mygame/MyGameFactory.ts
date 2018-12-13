@@ -41,6 +41,12 @@ class MyGameObjectBuilder extends GameObjectBuilder {
         bitmapCom.y = y;
         return this;
     }
+
+    public addTiledMap(tiledMapName: string): GameObjectBuilder {
+        const tiledMapCom = this.gameObject.addAs(TiledMapComponent);
+        tiledMapCom.o = new TiledMap(tiledMapName);
+        return this;
+    }
 }
 
 class MyGameObjectFactory {
@@ -76,10 +82,17 @@ class MyGameObjectFactory {
         egret.log('MyGameObjectFactory clear');
     }
 
-    public createTestGameObject(): GameObject {
+    public createTestGameObject(x: number, y: number): GameObject {
         const bd = this.builder;
         (bd.create('TestGameObject') as MyGameObjectBuilder)
-        .addBitmap(0, 0);
+        .addBitmap(x, y);
+        return bd.get();
+    }
+
+    public createTestTiledMap(tiledMapName: string): GameObject {
+        const bd = this.builder;
+        (bd.create('TestTiledMap') as MyGameObjectBuilder)
+        .addTiledMap(tiledMapName);
         return bd.get();
     }
 }

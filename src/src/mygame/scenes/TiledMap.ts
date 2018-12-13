@@ -18,7 +18,12 @@ class TiledMapGrid {
         this.colidx = Math.ceil(colidx);
     }
 
+    public clear(): TiledMapGrid {
+        return this;
+    }
+
     public onReplace(target: TiledMapGrid): TiledMapGrid {
+        egret.log('onReplace = ' + target);
         return this;
     }
 
@@ -59,6 +64,23 @@ class TiledMapLayer {
         this.gw = gw;
         this.gh = gh;
         this.resize(rownumber, colnumber);
+    }
+
+    public clear(): TiledMapLayer {
+        const grids = this.grids;
+        grids.length = this.col;
+        let arr: TiledMapGrid[] = [];
+        for (let i = 0, l = grids.length; i < l; ++i) {
+            if (!grids[i]) {
+                grids[i] = [];
+            }
+            arr = grids[i];
+            arr.forEach(function (e) {
+                e.clear();
+            });
+        }
+        this.grids = [];
+        return this;
     }
 
     public resize(rownumber: number, colnumber: number): TiledMapLayer {
@@ -113,10 +135,10 @@ class TiledMap {
 
     public name: string = '';
     public layers: Array<TiledMapLayer> = [];
-    private readonly defaultRow: number = 0;
-    private readonly defaultCol: number = 0;
-    private readonly defaultGridWidth: number = 0;
-    private readonly defaultGridHeight: number = 0;
+    public readonly defaultRow: number = 0;
+    public readonly defaultCol: number = 0;
+    public readonly defaultGridWidth: number = 0;
+    public readonly defaultGridHeight: number = 0;
 
     constructor(name: string, defaultRow: number = 2, defaultCol: number = 2, defaultGridWidth: number = 100, defaultGridHeight: number = 100) {
         this.name = name;
@@ -124,6 +146,14 @@ class TiledMap {
         this.defaultCol = defaultCol;
         this.defaultGridWidth = defaultGridWidth;
         this.defaultGridHeight = defaultGridHeight;
+    }
+
+    public clear(): TiledMap {
+        this.layers.forEach(function (e) {
+            e.clear();
+        });
+        this.layers = [];
+        return this;
     }
 
     public addTiledMapLayer(add?: TiledMapLayer): TiledMapLayer {

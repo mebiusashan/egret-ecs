@@ -29,4 +29,5 @@
 
 const MyComponentsClassesRegister: Array<entitas.IComponent> = [
     BitmapComponent,
+    TiledMapComponent
 ];

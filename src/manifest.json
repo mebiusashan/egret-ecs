@@ -12,7 +12,7 @@
 	],
 	"game": [
 		"bin-debug/egret-ecs/core/GameScene.js",
-		"bin-debug/mygame/components/BitmapComponent.js",
+		"bin-debug/mygame/components/TiledMapComponent.js",
 		"bin-debug/egret-ecs/components/DestroyComponent.js",
 		"bin-debug/egret-ecs/core/GameContext.js",
 		"bin-debug/egret-ecs/core/GameEntity.js",
@@ -22,8 +22,8 @@
 		"bin-debug/egret-ecs/sound/BaseSound.js",
 		"bin-debug/egret-ecs/systems/GameSystem.js",
 		"bin-debug/egret-ecs/systems/GameSystems.js",
-		"bin-debug/egret-ecs/sound/SoundEffects.js",
-		"bin-debug/egret-ecs/eui/adapter/AssetAdapter.js",
+		"bin-debug/mygame/components/BitmapComponent.js",
+		"bin-debug/egret-ecs/sound/SoundManager.js",
 		"bin-debug/egret-ecs/eui/adapter/ThemeAdapter.js",
 		"bin-debug/egret-ecs/geometry/Vector2.js",
 		"bin-debug/egret-ecs/LocalStorageItems.js",
@@ -31,8 +31,8 @@
 		"bin-debug/egret-ecs/platform/WXPlatform.js",
 		"bin-debug/egret-ecs/components/ComponentsClassesRegister.js",
 		"bin-debug/egret-ecs/sound/SoundBackground.js",
+		"bin-debug/egret-ecs/sound/SoundEffects.js",
 		"bin-debug/Main.js",
-		"bin-debug/egret-ecs/sound/SoundManager.js",
 		"bin-debug/egret-ecs/sound/Voice.js",
 		"bin-debug/egret-ecs/systems/DestroySystem.js",
 		"bin-debug/egret-ecs/core/GameObject.js",
@@ -48,8 +48,10 @@
 		"bin-debug/mygame/MyGameFactory.js",
 		"bin-debug/egret-ecs/core/EntitasContext.js",
 		"bin-debug/mygame/components/MyComponentsClassesRegister.js",
+		"bin-debug/egret-ecs/eui/adapter/AssetAdapter.js",
 		"bin-debug/mygame/scenes/TestScene.js",
 		"bin-debug/mygame/scenes/TiledMap.js",
-		"bin-debug/mygame/systems/TestSystem.js"
+		"bin-debug/mygame/systems/TestSystem.js",
+		"bin-debug/mygame/systems/TiledMapViewSystem.js"
 	]
 }

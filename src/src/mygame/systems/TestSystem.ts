@@ -26,8 +26,6 @@ class TestExecuteSystem extends GameSystem<MyGameContext> implements entitas.IIn
         let bitmapCom: BitmapComponent = null;
         const gamecontext: MyGameContext = this.gamecontext;
         const scene = gamecontext.gameScene as TestScene;
-        const posx = gamecontext.stage.stageWidth/2;
-        const posy = gamecontext.stage.stageHeight/2;
         for (let i = 0, length = ens.length; i < length; ++i) {
             e = ens[i] as GameObject;
             bitmapCom = e.getAs(BitmapComponent);
@@ -36,10 +34,16 @@ class TestExecuteSystem extends GameSystem<MyGameContext> implements entitas.IIn
                 bitmapCom.texture = RES.getRes('egret_icon_png');
                 bitmapCom.anchorOffsetX = bitmapCom.width/2;
                 bitmapCom.anchorOffsetY = bitmapCom.height/2;
-                bitmapCom.x = posx;
-                bitmapCom.y = posy;
             }
         }
+    }
+}
+
+class TestViewSystem extends GameSystems<MyGameContext> {
+    public setPool(pool: entitas.Pool): void {
+        const ecscontext = this.ecscontext;
+        const gamecontext = this.gamecontext;
+        this.add(pool.createSystem(new TiledMapViewSystem(ecscontext, gamecontext)));
     }
 }
 
@@ -48,6 +52,7 @@ class TestSystem extends GameSystems<MyGameContext> {
         const ecscontext = this.ecscontext;
         const gamecontext = this.gamecontext;
         this.add(pool.createSystem(new TestExecuteSystem(ecscontext, gamecontext)));
+        this.add(pool.createSystem(new TestViewSystem(ecscontext, gamecontext)));
         this.add(pool.createSystem(new DestroySystem(ecscontext, gamecontext)));
     }
 }

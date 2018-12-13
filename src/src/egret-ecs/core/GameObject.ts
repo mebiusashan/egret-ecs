@@ -37,14 +37,15 @@ class GameObject extends GameEntity {
 
     public set builder(value: GameObjectBuilder) {
         this._builder = value;
+        this._builder.set(this);
     }
 
     public get builder(): GameObjectBuilder {
         if (!this._builder) {
             egret.warn('this._builder is null, new GameObjectBuilder is not good');
             this._builder = new GameObjectBuilder(this.ecscontext);
-            this._builder.set(this);
         }
+        this._builder.set(this);
         return this._builder;
     }
 }

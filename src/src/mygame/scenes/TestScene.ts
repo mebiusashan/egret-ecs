@@ -45,20 +45,32 @@ class TestScene extends GameScene<MyGameContext> {
         testSystem.setPool(this.ecscontext.pool);
         testSystem.initialize();
         //
+        const gamecontext = this.gamecontext;
+        const posx = gamecontext.stage.stageWidth/2;
+        const posy = gamecontext.stage.stageHeight/2;
         MyGameObjectFactory.getInstance().setBuilder(new MyGameObjectBuilder(this.ecscontext));
-        const testObject = MyGameObjectFactory.getInstance().createTestGameObject();
-        //testObject.builder.addDestroy();
-
+        const testObject1 = MyGameObjectFactory.getInstance().createTestGameObject(posx, posy);
+        const testObject2 = MyGameObjectFactory.getInstance().createTestGameObject(posx + 200, posy);
         this.testTileMap();
     }
 
     private testTileMap(): void {
-        const tlm = new TiledMap('testmap');
+        // const tlm = new TiledMap('testmap');
+        // const layer = new TiledMapLayer('testlayer', tlm, 3, 4, 100, 100);
+        // const layer1 = tlm.addTiledMapLayer(layer);
+        // for (let i = 0; i < 4; ++i) {
+        //     for (let j = 0; j < 3; ++j) {
+        //         layer1.addGrid(j, i);
+        //     }
+        // }
+        const testTiledMap = MyGameObjectFactory.getInstance().createTestTiledMap('TiledMap');
+        const tiledMapCom = testTiledMap.getAs(TiledMapComponent);
+        const tlm = tiledMapCom.o;
         const layer = new TiledMapLayer('testlayer', tlm, 3, 4, 100, 100);
-        const layer1 = tlm.addTiledMapLayer(layer);
+        tlm.addTiledMapLayer(layer);
         for (let i = 0; i < 4; ++i) {
             for (let j = 0; j < 3; ++j) {
-                layer1.addGrid(j, i);
+                layer.addGrid(j, i);
             }
         }
     }
