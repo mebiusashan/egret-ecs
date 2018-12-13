@@ -27,7 +27,7 @@ class TestExecuteSystem extends GameSystem<MyGameContext> implements entitas.IIn
         const scene = gamecontext.gameScene as TestScene;
         const ks = gamecontext.keystate;
         const dt = gamecontext.dtSec;
-        const movespeed = 300;
+        const movespeed = 300 * dt;
         for (let i = 0, length = ens.length; i < length; ++i) {
             e = ens[i] as GameObject;
             bitmapCom = e.getAs(BitmapComponent);
@@ -39,19 +39,19 @@ class TestExecuteSystem extends GameSystem<MyGameContext> implements entitas.IIn
             }
 
             if (ks[KeyBoard.A] || ks[KeyBoard.keyArrow]) {
-                bitmapCom.x += movespeed * dt * -1;
+                bitmapCom.x += movespeed * -1;
             }
             else if (ks[KeyBoard.D] || ks[KeyBoard.RightArrow]) {
-                bitmapCom.x += movespeed * dt * 1;
+                bitmapCom.x += movespeed * 1;
             }
             else {
             }
 
             if (ks[KeyBoard.W] || ks[KeyBoard.UpArrow]) {
-                bitmapCom.y += movespeed * dt * -1;
+                bitmapCom.y += movespeed * -1;
             }
             else if (ks[KeyBoard.S] || ks[KeyBoard.DownArrow]) {
-                bitmapCom.y += movespeed * dt * 1;
+                bitmapCom.y += movespeed * 1;
             }
             else {
             }

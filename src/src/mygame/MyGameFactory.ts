@@ -35,21 +35,28 @@ class MyGameObjectBuilder extends GameObjectBuilder {
         return this;
     }
 
-    public addBitmap(x: number, y: number): GameObjectBuilder {
+    public addBitmap(x: number, y: number): MyGameObjectBuilder {
         const bitmapCom = this.gameObject.addAs(BitmapComponent);
         bitmapCom.x = x;
         bitmapCom.y = y;
         return this;
     }
 
-    public addTiledMap(tiledMapName: string): GameObjectBuilder {
-        
+    public addTiledMap(tiledMapName: string): MyGameObjectBuilder {
         const tiledMapCom = this.gameObject.addAs(TiledMapComponent);
         tiledMapCom.o = new TiledMap(tiledMapName);
-
         this.gameObject.addAs(TiledMapViewComponent);
         return this;
     }
+
+    public addCamera(halfWidth: number, halfHeight: number, viewScale: number): MyGameObjectBuilder {
+        const camera2dCom = this.gameObject.addAs(Camera2dComponent);
+        camera2dCom.halfWidth = halfWidth;
+        camera2dCom.halfHeight = halfHeight;
+        camera2dCom.viewScale = viewScale;
+        return this;
+    }
+
 }
 
 class MyGameObjectFactory {
@@ -88,7 +95,7 @@ class MyGameObjectFactory {
     public createTestGameObject(x: number, y: number): GameObject {
         const bd = this.builder;
         (bd.create('TestGameObject') as MyGameObjectBuilder)
-        .addBitmap(x, y);
+        .addBitmap(x, y).addCamera(100, 100, 1);
         return bd.get();
     }
 
