@@ -17,3 +17,16 @@ class Camera2dComponent implements entitas.IComponent, IData {
         this.viewScale = 1;
     }
 }
+
+class Camera2dDebugViewComponent extends egret.Shape implements entitas.IComponent, IView {
+    //public resname: string = '';
+    public removeView(): void {
+        utils.removeFromParent(this);
+    }
+}
+
+class PositionComponent extends egret.Point implements entitas.IComponent, IData {
+    public restore(): void {
+        this.setTo(0, 0);
+    }
+}

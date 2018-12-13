@@ -27,6 +27,7 @@ class TestScene extends GameScene<MyGameContext> {
     private registerAllLayers(): void {
         this.layer0 = this.registerLayer(TestSceneLayer.LAYER0, 'LAYER0');
         this.layer1 = this.registerLayer(TestSceneLayer.LAYER1, 'LAYER1');
+        this.registerDebugViewLayer();
     }
 
     protected exitScene(): void {

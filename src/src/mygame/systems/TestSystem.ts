@@ -9,8 +9,8 @@
 class TestExecuteSystem extends GameSystem<MyGameContext> implements entitas.IInitializeSystem, entitas.IExecuteSystem, entitas.ISetPool {
     private group1: entitas.Group | null = null;
     public setPool(pool: entitas.Pool): void {
-        const ids = this.ecscontext.ids; 
-        this.group1 = pool.getGroup(entitas.Matcher.allOf(ids.BitmapComponent));
+        const ids = this.ecscontext.ids;  
+        this.group1 = pool.getGroup(entitas.Matcher.allOf(ids.BitmapComponent, ids.PositionComponent));
     }
 
     public initialize(): any {
@@ -23,6 +23,7 @@ class TestExecuteSystem extends GameSystem<MyGameContext> implements entitas.IIn
         }
         let e: GameObject = null;
         let bitmapCom: BitmapComponent = null;
+        let posCom: PositionComponent = null;
         const gamecontext: MyGameContext = this.gamecontext;
         const scene = gamecontext.gameScene as TestScene;
         const ks = gamecontext.keystate;
@@ -38,24 +39,27 @@ class TestExecuteSystem extends GameSystem<MyGameContext> implements entitas.IIn
                 bitmapCom.anchorOffsetY = bitmapCom.height/2;
             }
 
+            posCom = e.getAs(PositionComponent);
             if (ks[KeyBoard.A] || ks[KeyBoard.keyArrow]) {
-                bitmapCom.x += movespeed * -1;
+                posCom.x += movespeed * -1;
             }
             else if (ks[KeyBoard.D] || ks[KeyBoard.RightArrow]) {
-                bitmapCom.x += movespeed * 1;
+                posCom.x += movespeed * 1;
             }
             else {
             }
 
             if (ks[KeyBoard.W] || ks[KeyBoard.UpArrow]) {
-                bitmapCom.y += movespeed * -1;
+                posCom.y += movespeed * -1;
             }
             else if (ks[KeyBoard.S] || ks[KeyBoard.DownArrow]) {
-                bitmapCom.y += movespeed * 1;
+                posCom.y += movespeed * 1;
             }
             else {
             }
-    
+
+            bitmapCom.x = posCom.x;
+            bitmapCom.y = posCom.y;
         }
     }
 }
@@ -73,6 +77,7 @@ class TestViewSystem extends GameSystems<MyGameContext> {
         const ecscontext = this.ecscontext;
         const gamecontext = this.gamecontext;
         this.add(pool.createSystem(new TiledMapViewSystem(ecscontext, gamecontext)));
+        this.add(pool.createSystem(new CameraViewSystem(ecscontext, gamecontext)));   
     }
 }
 
@@ -80,7 +85,6 @@ class TestSystem extends GameSystems<MyGameContext> {
     public setPool(pool: entitas.Pool): void {
         const ecscontext = this.ecscontext;
         const gamecontext = this.gamecontext;
-        
         this.add(pool.createSystem(new TestInputSystem(ecscontext, gamecontext)));
         this.add(pool.createSystem(new TestExecuteSystem(ecscontext, gamecontext)));
         this.add(pool.createSystem(new TestViewSystem(ecscontext, gamecontext)));

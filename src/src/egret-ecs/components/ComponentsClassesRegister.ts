@@ -28,6 +28,8 @@
 //////////////////////////////////////////////////////////////////////////////////////
 
 const ComponentsClassesRegister: Array<entitas.IComponent> = [
+    PositionComponent,
     Camera2dComponent,
+    Camera2dDebugViewComponent,
     DestroyComponent,
 ];

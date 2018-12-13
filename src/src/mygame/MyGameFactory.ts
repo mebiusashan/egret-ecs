@@ -49,14 +49,20 @@ class MyGameObjectBuilder extends GameObjectBuilder {
         return this;
     }
 
-    public addCamera(halfWidth: number, halfHeight: number, viewScale: number): MyGameObjectBuilder {
+    public addCamera2d(halfWidth: number, halfHeight: number, viewScale: number): MyGameObjectBuilder {
         const camera2dCom = this.gameObject.addAs(Camera2dComponent);
         camera2dCom.halfWidth = halfWidth;
         camera2dCom.halfHeight = halfHeight;
         camera2dCom.viewScale = viewScale;
+        this.gameObject.addAs(Camera2dDebugViewComponent);
         return this;
     }
 
+    public addPosition(x: number, y: number): MyGameObjectBuilder {
+        const posCom = this.gameObject.addAs(PositionComponent);
+        posCom.setTo(x, y);
+        return this;
+    }
 }
 
 class MyGameObjectFactory {
@@ -95,7 +101,9 @@ class MyGameObjectFactory {
     public createTestGameObject(x: number, y: number): GameObject {
         const bd = this.builder;
         (bd.create('TestGameObject') as MyGameObjectBuilder)
-        .addBitmap(x, y).addCamera(100, 100, 1);
+        .addBitmap(x, y)
+        .addCamera2d(60, 100, 1)
+        .addPosition(x, y);
         return bd.get();
     }
 
